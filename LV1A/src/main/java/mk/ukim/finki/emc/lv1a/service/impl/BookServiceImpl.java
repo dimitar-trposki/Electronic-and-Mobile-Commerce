@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        return bookRepository.findAll().stream().filter(book -> !book.isDeleted()).toList();
     }
 
     @Override
@@ -39,12 +39,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> findById(Long id) {
-        return bookRepository.findById(id);
+        Book book = bookRepository.findById(id).get();
+        if (!book.isDeleted()) {
+            return Optional.of(book);
+        }
+        return Optional.empty();
     }
 
     @Override
     public Optional<Book> update(Long id, BookDto book) {
         return bookRepository.findById(id).map(existingBook -> {
+            if (book.isDeleted()) {
+                return bookRepository.save(existingBook);
+            }
             if (book.getTitle() != null) {
                 existingBook.setTitle(book.getTitle());
             }
@@ -57,13 +64,18 @@ public class BookServiceImpl implements BookService {
             if (book.getAvailableCopies() != null) {
                 existingBook.setAvailableCopies(book.getAvailableCopies());
             }
+            if (!book.isDeleted()) {
+                existingBook.setDeleted(false);
+            }
             return bookRepository.save(existingBook);
         });
     }
 
     @Override
     public void deleteById(Long id) {
-        bookRepository.deleteById(id);
+        Book book = bookRepository.findById(id).get();
+        book.setDeleted(true);
+        bookRepository.save(book);
     }
 
     @Override
@@ -71,7 +83,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid book ID"));
 
-        if (book.getAvailableCopies() >= 1) {
+        if (book.getAvailableCopies() >= 1 && !book.isDeleted()) {
             book.setAvailableCopies(book.getAvailableCopies() - 1);
             bookRepository.save(book);
         }

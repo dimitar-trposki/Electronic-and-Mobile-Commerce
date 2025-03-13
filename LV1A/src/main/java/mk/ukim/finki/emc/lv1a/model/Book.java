@@ -21,6 +21,8 @@ public class Book {
 
     private Integer availableCopies;
 
+    private boolean deleted;
+
     public Book() {
     }
 
@@ -29,6 +31,7 @@ public class Book {
         this.category = category;
         this.author = author;
         this.availableCopies = availableCopies;
+        this.deleted = false;
     }
 
     public Long getId() {
@@ -69,5 +72,13 @@ public class Book {
 
     public void setAvailableCopies(Integer availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }
