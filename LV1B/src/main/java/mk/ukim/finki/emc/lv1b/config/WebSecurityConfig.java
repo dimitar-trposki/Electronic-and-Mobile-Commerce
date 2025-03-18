@@ -1,5 +1,5 @@
 //package mk.ukim.finki.emc.lv1b.config;
-
+//
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;

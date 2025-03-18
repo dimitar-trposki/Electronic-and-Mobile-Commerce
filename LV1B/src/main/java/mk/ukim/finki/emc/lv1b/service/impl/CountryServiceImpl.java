@@ -1,6 +1,7 @@
 package mk.ukim.finki.emc.lv1b.service.impl;
 
 import mk.ukim.finki.emc.lv1b.model.Country;
+import mk.ukim.finki.emc.lv1b.repositrory.CountryRepository;
 import mk.ukim.finki.emc.lv1b.service.CountryService;
 import org.springframework.stereotype.Service;
 
@@ -9,28 +10,43 @@ import java.util.Optional;
 
 @Service
 public class CountryServiceImpl implements CountryService {
+
+    private final CountryRepository countryRepository;
+
+    public CountryServiceImpl(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
+
     @Override
     public List<Country> findAll() {
-        return List.of();
+        return countryRepository.findAll();
     }
 
     @Override
     public Optional<Country> save(Country country) {
-        return Optional.empty();
+        return Optional.of(countryRepository.save(country));
     }
 
     @Override
     public Optional<Country> findById(Long id) {
-        return Optional.empty();
+        return countryRepository.findById(id);
     }
 
     @Override
-    public Optional<Country> update(Long id, Country category) {
-        return Optional.empty();
+    public Optional<Country> update(Long id, Country country) {
+        return countryRepository.findById(id).map(existingCountry -> {
+            if (country.getName() != null) {
+                existingCountry.setName(country.getName());
+            }
+            if (country.getContinent() != null) {
+                existingCountry.setContinent(country.getContinent());
+            }
+            return countryRepository.save(existingCountry);
+        });
     }
 
     @Override
     public void deleteById(Long id) {
-
+        countryRepository.deleteById(id);
     }
 }
