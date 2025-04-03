@@ -1,7 +1,6 @@
 package mk.ukim.finki.emc.lv1a.web;
 
 import mk.ukim.finki.emc.lv1a.model.domain.Book;
-import mk.ukim.finki.emc.lv1a.dto.BookDto;
 import mk.ukim.finki.emc.lv1a.service.domain.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

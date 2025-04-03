@@ -1,7 +1,6 @@
 package mk.ukim.finki.emc.lv1a.service.domain.impl;
 
 import mk.ukim.finki.emc.lv1a.model.domain.Author;
-import mk.ukim.finki.emc.lv1a.dto.AuthorDto;
 import mk.ukim.finki.emc.lv1a.repository.AuthorRepository;
 import mk.ukim.finki.emc.lv1a.service.domain.AuthorService;
 import mk.ukim.finki.emc.lv1a.service.domain.CountryService;

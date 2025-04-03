@@ -2,7 +2,6 @@ package mk.ukim.finki.emc.lv1a.service.domain.impl;
 
 import mk.ukim.finki.emc.lv1a.model.domain.Book;
 import mk.ukim.finki.emc.lv1a.model.enumerations.Category;
-import mk.ukim.finki.emc.lv1a.dto.BookDto;
 import mk.ukim.finki.emc.lv1a.repository.BookRepository;
 import mk.ukim.finki.emc.lv1a.service.domain.AuthorService;
 import mk.ukim.finki.emc.lv1a.service.domain.BookService;

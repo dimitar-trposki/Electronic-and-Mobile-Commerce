@@ -2,7 +2,6 @@ package mk.ukim.finki.emc.lv1a.service.application.impl;
 
 import mk.ukim.finki.emc.lv1a.dto.CreateAuthorDto;
 import mk.ukim.finki.emc.lv1a.dto.DisplayAuthorDto;
-import mk.ukim.finki.emc.lv1a.dto.DisplayUserDto;
 import mk.ukim.finki.emc.lv1a.service.application.AuthorApplicationService;
 import mk.ukim.finki.emc.lv1a.service.domain.AuthorService;
 import org.springframework.stereotype.Service;

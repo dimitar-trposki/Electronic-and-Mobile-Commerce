@@ -11,7 +11,6 @@ import mk.ukim.finki.emc.lv1a.repository.AuthorRepository;
 import mk.ukim.finki.emc.lv1a.repository.BookRepository;
 import mk.ukim.finki.emc.lv1a.repository.CountryRepository;
 import mk.ukim.finki.emc.lv1a.repository.UserRepository;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

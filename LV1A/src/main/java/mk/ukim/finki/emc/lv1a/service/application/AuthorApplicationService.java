@@ -2,7 +2,6 @@ package mk.ukim.finki.emc.lv1a.service.application;
 
 import mk.ukim.finki.emc.lv1a.dto.CreateAuthorDto;
 import mk.ukim.finki.emc.lv1a.dto.DisplayAuthorDto;
-import mk.ukim.finki.emc.lv1a.model.domain.Author;
 
 import java.util.List;
 import java.util.Optional;
