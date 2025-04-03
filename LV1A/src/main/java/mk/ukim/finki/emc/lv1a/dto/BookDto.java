@@ -1,45 +1,29 @@
-package mk.ukim.finki.emc.lv1a.model;
+package mk.ukim.finki.emc.lv1a.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Entity
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class BookDto {
 
     private String title;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
 
-    @ManyToOne
-    private Author author;
+    private Long author;
 
     private Integer availableCopies;
 
     private boolean deleted;
 
-    public Book() {
+    public BookDto() {
     }
 
-    public Book(String title, Category category, Author author, Integer availableCopies) {
+    public BookDto(String title, String category, Long author, Integer availableCopies) {
         this.title = title;
         this.category = category;
         this.author = author;
         this.availableCopies = availableCopies;
         this.deleted = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -50,19 +34,19 @@ public class Book {
         this.title = title;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public Author getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(Long author) {
         this.author = author;
     }
 

@@ -1,4 +1,4 @@
-package mk.ukim.finki.emc.lv1a.model.dto;
+package mk.ukim.finki.emc.lv1a.dto;
 
 import lombok.Data;
 

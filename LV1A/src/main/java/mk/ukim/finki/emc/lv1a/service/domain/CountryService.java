@@ -1,7 +1,6 @@
-package mk.ukim.finki.emc.lv1a.service;
+package mk.ukim.finki.emc.lv1a.service.domain;
 
-import mk.ukim.finki.emc.lv1a.model.Category;
-import mk.ukim.finki.emc.lv1a.model.Country;
+import mk.ukim.finki.emc.lv1a.model.domain.Country;
 
 import java.util.List;
 import java.util.Optional;
