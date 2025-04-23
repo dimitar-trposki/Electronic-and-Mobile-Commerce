@@ -2,6 +2,7 @@ package mk.ukim.finki.emc.lv1a.model.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
 @Entity

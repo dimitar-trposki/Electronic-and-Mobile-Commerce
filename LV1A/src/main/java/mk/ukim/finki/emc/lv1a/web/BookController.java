@@ -1,6 +1,8 @@
 package mk.ukim.finki.emc.lv1a.web;
 
 import mk.ukim.finki.emc.lv1a.model.domain.Book;
+import mk.ukim.finki.emc.lv1a.model.projections.BookCountView;
+import mk.ukim.finki.emc.lv1a.repository.BookCountRepository;
 import mk.ukim.finki.emc.lv1a.service.domain.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final BookCountRepository bookCountRepository;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookCountRepository bookCountRepository) {
         this.bookService = bookService;
+        this.bookCountRepository = bookCountRepository;
     }
 
     @GetMapping
@@ -55,6 +59,11 @@ public class BookController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/by-author")
+    public List<BookCountView> getBooksByAuthor() {
+        return bookCountRepository.findAllBookCounts();
     }
 
 }

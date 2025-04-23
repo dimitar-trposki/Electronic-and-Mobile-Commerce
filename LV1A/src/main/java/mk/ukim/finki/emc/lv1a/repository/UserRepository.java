@@ -18,7 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     @EntityGraph(
-            type = EntityGraph.EntityGraphType.FETCH,
+            value = "User.withoutWishlist",
+            type = EntityGraph.EntityGraphType.LOAD,
             attributePaths = {"carts"}
     )
     @Query("select u from User u")

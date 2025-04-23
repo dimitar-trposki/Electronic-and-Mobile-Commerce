@@ -15,6 +15,19 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "book_users")
+@NamedEntityGraph(
+        name = "User.withoutWishlist",
+        attributeNodes = {
+                @NamedAttributeNode("username"),
+                @NamedAttributeNode("name"),
+                @NamedAttributeNode("surname"),
+                @NamedAttributeNode("isAccountNonExpired"),
+                @NamedAttributeNode("isAccountNonLocked"),
+                @NamedAttributeNode("isCredentialsNonExpired"),
+                @NamedAttributeNode("isEnabled"),
+                @NamedAttributeNode("role")
+        }
+)
 public class User implements UserDetails {
     @Id
     private String username;
@@ -34,7 +47,7 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Book> wishlistBooks;
 
     // default:
@@ -128,35 +141,11 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        isAccountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        isCredentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
-    }
-
     public Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public List<Book> getWishlistBooks() {
         return wishlistBooks;
-    }
-
-    public void setWishlistBooks(List<Book> wishlistBooks) {
-        this.wishlistBooks = wishlistBooks;
     }
 }

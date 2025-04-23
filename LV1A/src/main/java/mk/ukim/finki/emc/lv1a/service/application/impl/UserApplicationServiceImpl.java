@@ -1,14 +1,12 @@
 package mk.ukim.finki.emc.lv1a.service.application.impl;
 
-import mk.ukim.finki.emc.lv1a.dto.CreateUserDto;
-import mk.ukim.finki.emc.lv1a.dto.DisplayBookDto;
-import mk.ukim.finki.emc.lv1a.dto.DisplayUserDto;
-import mk.ukim.finki.emc.lv1a.dto.LoginUserDto;
+import mk.ukim.finki.emc.lv1a.dto.*;
 import mk.ukim.finki.emc.lv1a.model.domain.Book;
 import mk.ukim.finki.emc.lv1a.model.domain.User;
 import mk.ukim.finki.emc.lv1a.service.application.UserApplicationService;
 import mk.ukim.finki.emc.lv1a.service.domain.UserService;
 import org.springframework.stereotype.Service;
+import mk.ukim.finki.emc.lv1a.security.JwtHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserApplicationServiceImpl implements UserApplicationService {
     private final UserService userService;
+    private final JwtHelper jwtHelper;
 
-    public UserApplicationServiceImpl(UserService userService) {
+    public UserApplicationServiceImpl(UserService userService, JwtHelper jwtHelper) {
         this.userService = userService;
+        this.jwtHelper = jwtHelper;
     }
 
     @Override
@@ -36,11 +36,15 @@ public class UserApplicationServiceImpl implements UserApplicationService {
     }
 
     @Override
-    public Optional<DisplayUserDto> login(LoginUserDto loginUserDto) {
-        return Optional.of(DisplayUserDto.from(userService.login(
+    public Optional<LoginResponseDto> login(LoginUserDto loginUserDto) {
+        User user = userService.login(
                 loginUserDto.username(),
                 loginUserDto.password()
-        )));
+        );
+
+        String token = jwtHelper.generateToken(user);
+
+        return Optional.of(new LoginResponseDto(token));
     }
 
     @Override

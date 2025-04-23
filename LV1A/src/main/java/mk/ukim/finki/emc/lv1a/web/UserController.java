@@ -5,12 +5,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import mk.ukim.finki.emc.lv1a.dto.CreateUserDto;
-import mk.ukim.finki.emc.lv1a.dto.DisplayBookDto;
-import mk.ukim.finki.emc.lv1a.dto.DisplayUserDto;
-import mk.ukim.finki.emc.lv1a.dto.LoginUserDto;
+import mk.ukim.finki.emc.lv1a.dto.*;
 import mk.ukim.finki.emc.lv1a.service.application.UserApplicationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,41 +51,44 @@ public class UserController {
             ), @ApiResponse(responseCode = "404", description = "Invalid username or password")}
     )
     @PostMapping("/login")
-    public ResponseEntity<DisplayUserDto> login(HttpServletRequest request) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginUserDto loginUserDto) {
         try {
-            DisplayUserDto displayUserDto = userApplicationService.login(
-                    new LoginUserDto(request.getParameter("username"), request.getParameter("password"))
-            ).orElseThrow(RuntimeException::new);
-
-            request.getSession().setAttribute("user", displayUserDto.toUser());
-            return ResponseEntity.ok(displayUserDto);
+            return userApplicationService.login(loginUserDto)
+                    .map(ResponseEntity::ok)
+                    .orElseThrow(RuntimeException::new);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @Operation(summary = "User logout", description = "Ends the user's session")
-    @ApiResponse(responseCode = "200", description = "User logged out successfully")
-    @GetMapping("/logout")
-    public void logout(HttpServletRequest request) {
-        request.getSession().invalidate();
-    }
+//    @Operation(summary = "User logout", description = "Ends the user's session")
+//    @ApiResponse(responseCode = "200", description = "User logged out successfully")
+//    @GetMapping("/logout")
+//    public void logout(HttpServletRequest request) {
+//        request.getSession().invalidate();
+//    }
 
     @Operation(summary = "User wishlist")
-    @GetMapping("/my_wishlist/{username}")
-    public List<DisplayBookDto> getUserWishlist(@PathVariable String username) {
+    @GetMapping("/my_wishlist")
+    public List<DisplayBookDto> getUserWishlist() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userApplicationService.getUserWishlist(username);
+        //return userApplicationService.getUserWishlist(username);
     }
 
     @Operation(summary = "Add book to wishlist")
-    @PostMapping("/add_to_wishlist/{username}")
-    public List<DisplayBookDto> addBookToWhishlist(@PathVariable String username, @RequestBody Long bookId) {
+    @PostMapping("/add_to_wishlist")
+    public List<DisplayBookDto> addBookToWhishlist(@RequestBody Long bookId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userApplicationService.addBookToWhishlist(username, bookId);
+        //        return userApplicationService.addBookToWhishlist(username, bookId);
     }
 
     @Operation(summary = "Loan wishlisted books")
-    @GetMapping("/loan_wishlist/{username}")
-    public List<DisplayBookDto> loanUserWishlist(@PathVariable String username) {
+    @GetMapping("/loan_wishlist")
+    public List<DisplayBookDto> loanUserWishlist() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userApplicationService.loanWishlistedBooks(username);
+        //return userApplicationService.loanWishlistedBooks(username);
     }
 }
