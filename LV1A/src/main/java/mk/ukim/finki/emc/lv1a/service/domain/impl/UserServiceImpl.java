@@ -38,22 +38,22 @@ public class UserServiceImpl implements UserService {
                 username));
     }
 
-    @Override
-    public List<Book> addBookToWhishlist(String username, Long bookId) {
-        Book book = bookService.findById(bookId).get();
-        User user = findByUsername(username);
-        if (book.getAvailableCopies() >= 1) {
-            user.getWishlistBooks().add(book);
-            userRepository.save(user);
-            return user.getWishlistBooks();
-        }
-        throw new RuntimeException("Book could not be added to user. No available copies found.");
-    }
+//    @Override
+//    public List<Book> addBookToWhishlist(String username, Long bookId) {
+//        Book book = bookService.findById(bookId).get();
+//        User user = findByUsername(username);
+//        if (book.getAvailableCopies() >= 1) {
+//            user.getWishlistBooks().add(book);
+//            userRepository.save(user);
+//            return user.getWishlistBooks();
+//        }
+//        throw new RuntimeException("Book could not be added to user. No available copies found.");
+//    }
 
-    @Override
-    public List<Book> getUserWishlist(String username) {
-        return userRepository.findByUsername(username).get().getWishlistBooks();
-    }
+//    @Override
+//    public List<Book> getUserWishlist(String username) {
+//        return userRepository.findByUsername(username).get().getWishlistBooks();
+//    }
 
     @Override
     public User register(

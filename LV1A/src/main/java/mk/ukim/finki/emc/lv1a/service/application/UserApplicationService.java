@@ -12,9 +12,9 @@ public interface UserApplicationService {
 
     Optional<DisplayUserDto> findByUsername(String username);
 
-    List<DisplayBookDto> addBookToWhishlist(String username, Long bookId);
+//    List<DisplayBookDto> addBookToWhishlist(String username, Long bookId);
 
-    List<DisplayBookDto> getUserWishlist(String username);
+//    List<DisplayBookDto> getUserWishlist(String username);
 
-    List<DisplayBookDto> loanWishlistedBooks(String username);
+//    List<DisplayBookDto> loanWishlistedBooks(String username);
 }

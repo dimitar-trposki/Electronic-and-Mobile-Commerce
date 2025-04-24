@@ -1,11 +1,11 @@
 CREATE MATERIALIZED VIEW book_count_by_author AS
 SELECT a.id                                   AS author_id,
-       CONCAT(a.first_name, ' ', a.last_name) AS full_name,
+       CONCAT(a.name, ' ', a.surname) AS full_name,
        COUNT(b.id)                            AS book_count
 FROM author a
          LEFT JOIN
      book b ON b.author_id = a.id
-GROUP BY a.id, a.first_name, a.last_name;
+GROUP BY a.id, a.name, a.surname;
 
 CREATE MATERIALIZED VIEW author_count_by_country AS
 SELECT c.id        AS country_id,

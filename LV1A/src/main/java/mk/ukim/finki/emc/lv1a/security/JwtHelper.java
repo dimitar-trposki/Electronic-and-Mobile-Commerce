@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,21 @@ public class JwtHelper {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("roles", userDetails.getAuthorities());
         return buildToken(extraClaims, userDetails.getUsername(), JwtConstants.EXPIRATION_TIME);
+    }
+
+    public Instant getIssuedAt(String token) {
+        return getClaims(token).getIssuedAt().toInstant();
+    }
+
+    public Instant getExpiration(String token) {
+        return getClaims(token).getExpiration().toInstant();
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(JwtConstants.SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private boolean isExpired(String token) {

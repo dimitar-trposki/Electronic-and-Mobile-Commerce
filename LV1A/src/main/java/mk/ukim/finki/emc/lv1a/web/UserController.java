@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import mk.ukim.finki.emc.lv1a.dto.*;
+import mk.ukim.finki.emc.lv1a.service.application.AuthLogService;
 import mk.ukim.finki.emc.lv1a.service.application.UserApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +19,11 @@ import java.util.List;
 @Tag(name = "User API", description = "Endpoints for user authentication and registration")
 public class UserController {
     private final UserApplicationService userApplicationService;
+    private final AuthLogService authLogService;
 
-    public UserController(UserApplicationService userApplicationService) {
+    public UserController(UserApplicationService userApplicationService, AuthLogService authLogService) {
         this.userApplicationService = userApplicationService;
+        this.authLogService = authLogService;
     }
 
     @Operation(summary = "Register a new user", description = "Creates a new user account")
@@ -68,27 +71,32 @@ public class UserController {
 //        request.getSession().invalidate();
 //    }
 
-    @Operation(summary = "User wishlist")
-    @GetMapping("/my_wishlist")
-    public List<DisplayBookDto> getUserWishlist() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userApplicationService.getUserWishlist(username);
-        //return userApplicationService.getUserWishlist(username);
-    }
+//    @Operation(summary = "User wishlist")
+//    @GetMapping("/my_wishlist")
+//    public List<DisplayBookDto> getUserWishlist() {
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return userApplicationService.getUserWishlist(username);
+//        //return userApplicationService.getUserWishlist(username);
+//    }
+//
+//    @Operation(summary = "Add book to wishlist")
+//    @PostMapping("/add_to_wishlist")
+//    public List<DisplayBookDto> addBookToWhishlist(@RequestBody Long bookId) {
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return userApplicationService.addBookToWhishlist(username, bookId);
+//        //        return userApplicationService.addBookToWhishlist(username, bookId);
+//    }
+//
+//    @Operation(summary = "Loan wishlisted books")
+//    @GetMapping("/loan_wishlist")
+//    public List<DisplayBookDto> loanUserWishlist() {
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return userApplicationService.loanWishlistedBooks(username);
+//        //return userApplicationService.loanWishlistedBooks(username);
+//    }
 
-    @Operation(summary = "Add book to wishlist")
-    @PostMapping("/add_to_wishlist")
-    public List<DisplayBookDto> addBookToWhishlist(@RequestBody Long bookId) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userApplicationService.addBookToWhishlist(username, bookId);
-        //        return userApplicationService.addBookToWhishlist(username, bookId);
-    }
-
-    @Operation(summary = "Loan wishlisted books")
-    @GetMapping("/loan_wishlist")
-    public List<DisplayBookDto> loanUserWishlist() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userApplicationService.loanWishlistedBooks(username);
-        //return userApplicationService.loanWishlistedBooks(username);
+    @GetMapping("/auth-logs")
+    public List<AuthLogDto> getAuthLogs() {
+        return authLogService.getAllLogs();
     }
 }

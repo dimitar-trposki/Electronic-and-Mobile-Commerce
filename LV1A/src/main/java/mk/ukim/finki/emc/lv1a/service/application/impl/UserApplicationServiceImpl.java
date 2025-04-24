@@ -3,11 +3,13 @@ package mk.ukim.finki.emc.lv1a.service.application.impl;
 import mk.ukim.finki.emc.lv1a.dto.*;
 import mk.ukim.finki.emc.lv1a.model.domain.Book;
 import mk.ukim.finki.emc.lv1a.model.domain.User;
+import mk.ukim.finki.emc.lv1a.service.application.AuthLogService;
 import mk.ukim.finki.emc.lv1a.service.application.UserApplicationService;
 import mk.ukim.finki.emc.lv1a.service.domain.UserService;
 import org.springframework.stereotype.Service;
 import mk.ukim.finki.emc.lv1a.security.JwtHelper;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 public class UserApplicationServiceImpl implements UserApplicationService {
     private final UserService userService;
     private final JwtHelper jwtHelper;
+    private final AuthLogService authLogService;
 
-    public UserApplicationServiceImpl(UserService userService, JwtHelper jwtHelper) {
+    public UserApplicationServiceImpl(UserService userService, JwtHelper jwtHelper, AuthLogService authLogService) {
         this.userService = userService;
         this.jwtHelper = jwtHelper;
+        this.authLogService = authLogService;
     }
 
     @Override
@@ -43,7 +47,9 @@ public class UserApplicationServiceImpl implements UserApplicationService {
         );
 
         String token = jwtHelper.generateToken(user);
-
+        Instant issuedAt = jwtHelper.getIssuedAt(token);
+        Instant expiresAt = jwtHelper.getExpiration(token);
+        authLogService.logToken(user.getUsername(), token, issuedAt, expiresAt);
         return Optional.of(new LoginResponseDto(token));
     }
 
@@ -52,23 +58,23 @@ public class UserApplicationServiceImpl implements UserApplicationService {
         return Optional.of(DisplayUserDto.from(userService.findByUsername(username)));
     }
 
-    @Override
-    public List<DisplayBookDto> addBookToWhishlist(String username, Long bookId) {
-        User user = userService.findByUsername(username);
-        userService.addBookToWhishlist(username, bookId);
-        List<Book> books = user.getWishlistBooks();
-        return books.stream().map(DisplayBookDto::from).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<DisplayBookDto> addBookToWhishlist(String username, Long bookId) {
+//        User user = userService.findByUsername(username);
+//        userService.addBookToWhishlist(username, bookId);
+//        List<Book> books = user.getWishlistBooks();
+//        return books.stream().map(DisplayBookDto::from).collect(Collectors.toList());
+//    }
 
-    @Override
-    public List<DisplayBookDto> getUserWishlist(String username) {
-        return userService.getUserWishlist(username).stream().map(DisplayBookDto::from).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<DisplayBookDto> getUserWishlist(String username) {
+//        return userService.getUserWishlist(username).stream().map(DisplayBookDto::from).collect(Collectors.toList());
+//    }
 
-    @Override
-    public List<DisplayBookDto> loanWishlistedBooks(String username) {
-        return List.of();
-    }
+//    @Override
+//    public List<DisplayBookDto> loanWishlistedBooks(String username) {
+//        return List.of();
+//    }
 
 }
 

@@ -46,9 +46,9 @@ public class User implements UserDetails {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Book> wishlistBooks;
+//
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<Book> wishlistBooks;
 
     // default:
     // to-one -> FetchType.EAGER
@@ -57,7 +57,7 @@ public class User implements UserDetails {
 //    private List<ShoppingCart> carts;
 
     public User() {
-        this.wishlistBooks = new ArrayList<>();
+//        this.wishlistBooks = new ArrayList<>();
     }
 
     public User(String username, String password, String name, String surname, Role role) {
@@ -66,7 +66,7 @@ public class User implements UserDetails {
         this.name = name;
         this.surname = surname;
         this.role = role;
-        this.wishlistBooks = new ArrayList<>();
+//        this.wishlistBooks = new ArrayList<>();
     }
 
     public User(String username, String password, String name, String surname) {
@@ -75,13 +75,13 @@ public class User implements UserDetails {
         this.name = name;
         this.surname = surname;
         this.role = Role.ROLE_USER;
-        this.wishlistBooks = new ArrayList<>();
+//        this.wishlistBooks = new ArrayList<>();
     }
 
     public User(UserDetails userDetails) {
         this.username = userDetails.getUsername();
         this.password = userDetails.getPassword();
-        this.wishlistBooks = new ArrayList<>();
+//        this.wishlistBooks = new ArrayList<>();
     }
 
     @Override
@@ -145,7 +145,7 @@ public class User implements UserDetails {
         return role;
     }
 
-    public List<Book> getWishlistBooks() {
-        return wishlistBooks;
-    }
+//    public List<Book> getWishlistBooks() {
+//        return wishlistBooks;
+//    }
 }
