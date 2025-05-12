@@ -1,5 +1,7 @@
 package mk.ukim.finki.emc.bookeshop.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import mk.ukim.finki.emc.bookeshop.dto.CreateAuthorDto;
 import mk.ukim.finki.emc.bookeshop.dto.DisplayAuthorDto;
 import mk.ukim.finki.emc.bookeshop.service.application.AuthorApplicationService;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/authors")
+@Tag(name = "Author API", description = "Endpoints for managing authors")
 public class AuthorController {
 
     private final AuthorApplicationService authorApplicationService;
@@ -18,11 +21,16 @@ public class AuthorController {
         this.authorApplicationService = authorApplicationService;
     }
 
+    @Operation(
+            summary = "Get all authors",
+            description = "Retrieves a list of all available authors."
+    )
     @GetMapping
     public List<DisplayAuthorDto> findAll() {
         return authorApplicationService.findAll();
     }
 
+    @Operation(summary = "Add a new author", description = "Creates a new author.")
     @PostMapping("/add")
     public ResponseEntity<DisplayAuthorDto> save(@RequestBody CreateAuthorDto author) {
         return authorApplicationService.save(author)
@@ -30,6 +38,7 @@ public class AuthorController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Get author by ID", description = "Finds a author by its ID.")
     @GetMapping("/{id}")
     public ResponseEntity<DisplayAuthorDto> findById(@PathVariable Long id) {
         return authorApplicationService.findById(id)
@@ -37,6 +46,7 @@ public class AuthorController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Update an existing author", description = "Updates a author by ID.")
     @PutMapping("/edit/{id}")
     public ResponseEntity<DisplayAuthorDto> update(@PathVariable Long id, @RequestBody CreateAuthorDto author) {
         return authorApplicationService.update(id, author)
@@ -44,6 +54,7 @@ public class AuthorController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Delete a author", description = "Deletes a author by its ID.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         if (authorApplicationService.findById(id).isPresent()) {
