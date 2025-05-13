@@ -3,11 +3,13 @@ package mk.ukim.finki.emc.bookeshop.service.application.impl;
 import mk.ukim.finki.emc.bookeshop.dto.CreateBookDto;
 import mk.ukim.finki.emc.bookeshop.dto.DisplayBookDto;
 import mk.ukim.finki.emc.bookeshop.model.domain.Author;
+import mk.ukim.finki.emc.bookeshop.model.domain.Book;
 import mk.ukim.finki.emc.bookeshop.service.application.BookApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,4 +55,21 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     public void deleteById(Long id) {
         bookService.deleteById(id);
     }
+
+    @Override
+    public void rented(Long id) {
+        Book book = bookService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book ID"));
+
+        if (book.getAvailableCopies() >= 1 /*&& !book.isIsDeleted()*/) {
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+            bookService.save(book);
+        }
+    }
+
+    @Override
+    public List<DisplayBookDto> findTopTenBooks() {
+        return DisplayBookDto.from(bookService.findTopTenBooks());
+    }
+
 }

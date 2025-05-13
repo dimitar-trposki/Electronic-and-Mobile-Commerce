@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import mk.ukim.finki.emc.bookeshop.model.enumerations.Category;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 public class Book {
@@ -22,22 +24,30 @@ public class Book {
 
     private Integer availableCopies;
 
+    private boolean isDeleted;
+
+    private LocalDateTime dateCreated;
+
     public Book() {
     }
 
-    public Book(String name, Category category, Author author, Integer availableCopies) {
+    public Book(String name, Category category, Author author, Integer availableCopies, LocalDateTime dateCreated) {
         this.name = name;
         this.category = category;
         this.author = author;
         this.availableCopies = availableCopies;
+        this.isDeleted = false;
+        this.dateCreated = dateCreated;
     }
 
-    public Book(Long id, String name, Category category, Author author, Integer availableCopies) {
+    public Book(Long id, String name, Category category, Author author, Integer availableCopies, LocalDateTime dateCreated) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.author = author;
         this.availableCopies = availableCopies;
+        this.isDeleted = false;
+        this.dateCreated = dateCreated;
     }
 
     public Long getId() {
@@ -78,5 +88,21 @@ public class Book {
 
     public void setAvailableCopies(Integer availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public boolean isIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean deleted) {
+        this.isDeleted = deleted;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

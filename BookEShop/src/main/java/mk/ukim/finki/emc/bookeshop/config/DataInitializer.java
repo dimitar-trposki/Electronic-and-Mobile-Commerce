@@ -14,6 +14,8 @@ import mk.ukim.finki.emc.bookeshop.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class DataInitializer {
 
@@ -57,12 +59,12 @@ public class DataInitializer {
 
 //        authorRepository.saveAll(List.of(HarperLee, JaneAusten, MigueldeCervantes));
 
-        Book ToKillAMockingbird = new Book("To Kill a Mockingbird", Category.NOVEL, HarperLee, 150);
-        Book GoSetaWatchman = new Book("Go Set a Watchman", Category.NOVEL, HarperLee, 120);
-        Book PrideAndPrejudice = new Book("To Kill a Mockingbird", Category.NOVEL, JaneAusten, 200);
-        Book Emma = new Book("Emma", Category.DRAMA, JaneAusten, 230);
-        Book DonQuixote = new Book("Don Quixote", Category.NOVEL, MigueldeCervantes, 170);
-        Book Lagitanilla = new Book("La gitanilla", Category.NOVEL, MigueldeCervantes, 50);
+        Book ToKillAMockingbird = new Book("To Kill a Mockingbird", Category.NOVEL, HarperLee, 150, LocalDateTime.of(1920, 7, 8, 12, 0));
+        Book GoSetaWatchman = new Book("Go Set a Watchman", Category.NOVEL, HarperLee, 120, LocalDateTime.of(1925, 7, 8, 12, 0));
+        Book PrideAndPrejudice = new Book("To Kill a Mockingbird", Category.NOVEL, JaneAusten, 200, LocalDateTime.of(1970, 7, 8, 12, 0));
+        Book Emma = new Book("Emma", Category.DRAMA, JaneAusten, 230, LocalDateTime.of(1965, 7, 8, 12, 0));
+        Book DonQuixote = new Book("Don Quixote", Category.NOVEL, MigueldeCervantes, 170, LocalDateTime.of(1999, 7, 8, 12, 0));
+        Book Lagitanilla = new Book("La gitanilla", Category.NOVEL, MigueldeCervantes, 50, LocalDateTime.of(1900, 7, 8, 12, 0));
 
         bookRepository.save(ToKillAMockingbird);
         bookRepository.save(GoSetaWatchman);

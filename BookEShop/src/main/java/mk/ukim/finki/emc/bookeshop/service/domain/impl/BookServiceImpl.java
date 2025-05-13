@@ -8,6 +8,7 @@ import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findAll() {
         return bookRepository.findAll();
+        //return bookRepository.findAll().stream().filter(book -> !book.isIsDeleted()).toList();
     }
 
     @Override
@@ -37,7 +39,8 @@ public class BookServiceImpl implements BookService {
             return Optional.of(bookRepository.save(new Book(book.getName(),
                     book.getCategory(),
                     book.getAuthor(),
-                    book.getAvailableCopies())));
+                    book.getAvailableCopies(),
+                    book.getDateCreated())));
         }
         return Optional.empty();
     }
@@ -45,11 +48,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
+//        Book book = bookRepository.findById(id).get();
+//        if (!book.isIsDeleted()) {
+//            return Optional.of(book);
+//        }
+//        return Optional.empty();
     }
 
     @Override
     public Optional<Book> update(Long id, Book book) {
         return bookRepository.findById(id).map(existingBook -> {
+//            if (book.isIsDeleted()) {
+//                return bookRepository.save(existingBook);
+//            }
             if (book.getName() != null) {
                 existingBook.setName(book.getName());
             }
@@ -62,6 +73,12 @@ public class BookServiceImpl implements BookService {
             if (book.getAvailableCopies() != null) {
                 existingBook.setAvailableCopies(book.getAvailableCopies());
             }
+            if (book.getDateCreated() != null) {
+                existingBook.setDateCreated(book.getDateCreated());
+            }
+//            if (!book.isIsDeleted()) {
+//                existingBook.setIsDeleted(false);
+//            }
             return bookRepository.save(existingBook);
         });
     }
@@ -69,6 +86,27 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
+//        Book book = bookRepository.findById(id).get();
+//        book.setIsDeleted(true);
+//        bookRepository.save(book);
+    }
+
+    @Override
+    public void rented(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book ID"));
+
+        if (book.getAvailableCopies() >= 1 /*&& !book.isIsDeleted()*/) {
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+            bookRepository.save(book);
+        }
+    }
+
+    @Override
+    public List<Book> findTopTenBooks() {
+        return bookRepository.findAll().stream()
+                .sorted(Comparator.comparing(Book::getDateCreated).reversed())
+                .limit(10).toList();
     }
 
 }

@@ -64,4 +64,13 @@ public class BookController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Get top 10 newest books",
+            description = "Retrieves a list of the top 10 books by date created in descending order."
+    )
+    @GetMapping("/findTopTenBooks")
+    public List<DisplayBookDto> findTopTenBooks() {
+        return bookApplicationService.findTopTenBooks();
+    }
+
 }

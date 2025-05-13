@@ -18,4 +18,8 @@ public interface BookService {
 
     void deleteById(Long id);
 
+    void rented(Long id);
+
+    List<Book> findTopTenBooks();
+
 }

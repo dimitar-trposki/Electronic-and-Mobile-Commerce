@@ -13,6 +13,8 @@ public class BookDto {
 
     private Integer availableCopies;
 
+    private boolean isDeleted;
+
     public BookDto() {
     }
 
@@ -21,6 +23,7 @@ public class BookDto {
         this.category = category;
         this.authorId = authorId;
         this.availableCopies = availableCopies;
+        this.isDeleted = false;
     }
 
     public String getName() {
@@ -55,4 +58,11 @@ public class BookDto {
         this.availableCopies = availableCopies;
     }
 
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 }

@@ -18,4 +18,8 @@ public interface BookApplicationService {
 
     void deleteById(Long id);
 
+    void rented(Long id);
+
+    List<DisplayBookDto> findTopTenBooks();
+
 }

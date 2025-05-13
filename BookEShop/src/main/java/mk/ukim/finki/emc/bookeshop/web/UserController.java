@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import mk.ukim.finki.emc.bookeshop.dto.CreateUserDto;
-import mk.ukim.finki.emc.bookeshop.dto.DisplayBookDto;
-import mk.ukim.finki.emc.bookeshop.dto.DisplayUserDto;
-import mk.ukim.finki.emc.bookeshop.dto.LoginUserDto;
+import mk.ukim.finki.emc.bookeshop.dto.*;
 import mk.ukim.finki.emc.bookeshop.service.application.UserApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,21 +70,4 @@ public class UserController {
         request.getSession().invalidate();
     }
 
-//    @Operation(summary = "User wishlist")
-//    @GetMapping("/my_wishlist/{username}")
-//    public List<DisplayBookDto> getUserWishlist(@PathVariable String username) {
-//        return userApplicationService.getUserWishlist(username);
-//    }
-//
-//    @Operation(summary = "Add book to wishlist")
-//    @PostMapping("/add_to_wishlist/{username}")
-//    public List<DisplayBookDto> addBookToWhishlist(@PathVariable String username, @RequestBody Long bookId) {
-//        return userApplicationService.addBookToWhishlist(username, bookId);
-//    }
-//
-//    @Operation(summary = "Loan wishlisted books")
-//    @GetMapping("/loan_wishlist/{username}")
-//    public List<DisplayBookDto> loanUserWishlist(@PathVariable String username) {
-//        return userApplicationService.loanWishlistedBooks(username);
-//    }
 }
