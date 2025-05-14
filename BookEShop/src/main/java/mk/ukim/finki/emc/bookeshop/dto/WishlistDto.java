@@ -20,8 +20,4 @@ public record WishlistDto(Long id,
                 wishlist.getWishlistStatus());
     }
 
-    public Wishlist toWishlist() {
-        return new Wishlist(user.toUser());
-    }
-
 }

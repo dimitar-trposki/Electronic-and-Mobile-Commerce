@@ -22,4 +22,6 @@ public interface BookApplicationService {
 
     List<DisplayBookDto> findTopTenBooks();
 
+    void refreshMaterializedView();
+
 }

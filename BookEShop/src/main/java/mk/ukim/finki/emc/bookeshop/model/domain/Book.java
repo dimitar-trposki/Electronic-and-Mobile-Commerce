@@ -90,14 +90,6 @@ public class Book {
         this.availableCopies = availableCopies;
     }
 
-    public boolean isIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean deleted) {
-        this.isDeleted = deleted;
-    }
-
     public LocalDateTime getDateCreated() {
         return dateCreated;
     }

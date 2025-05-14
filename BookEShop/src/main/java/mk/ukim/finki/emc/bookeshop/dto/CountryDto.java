@@ -25,12 +25,4 @@ public class CountryDto {
         this.name = name;
     }
 
-    public String getContinent() {
-        return continent;
-    }
-
-    public void setContinent(String continent) {
-        this.continent = continent;
-    }
-
 }

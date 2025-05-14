@@ -1,7 +1,6 @@
 package mk.ukim.finki.emc.bookeshop.service.domain.impl;
 
 import mk.ukim.finki.emc.bookeshop.model.domain.Country;
-import mk.ukim.finki.emc.bookeshop.dto.CountryDto;
 import mk.ukim.finki.emc.bookeshop.repository.CountryRepository;
 import mk.ukim.finki.emc.bookeshop.service.domain.CountryService;
 import org.springframework.stereotype.Service;

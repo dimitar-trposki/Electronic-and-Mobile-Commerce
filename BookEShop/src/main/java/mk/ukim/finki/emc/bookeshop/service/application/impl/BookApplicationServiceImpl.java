@@ -4,6 +4,7 @@ import mk.ukim.finki.emc.bookeshop.dto.CreateBookDto;
 import mk.ukim.finki.emc.bookeshop.dto.DisplayBookDto;
 import mk.ukim.finki.emc.bookeshop.model.domain.Author;
 import mk.ukim.finki.emc.bookeshop.model.domain.Book;
+import mk.ukim.finki.emc.bookeshop.repository.BooksPerAuthorRepository;
 import mk.ukim.finki.emc.bookeshop.service.application.BookApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.BookService;
@@ -18,10 +19,12 @@ public class BookApplicationServiceImpl implements BookApplicationService {
 
     private final BookService bookService;
     private final AuthorService authorService;
+    private final BooksPerAuthorRepository booksPerAuthorRepository;
 
-    public BookApplicationServiceImpl(BookService bookService, AuthorService authorService) {
+    public BookApplicationServiceImpl(BookService bookService, AuthorService authorService, BooksPerAuthorRepository booksPerAuthorRepository) {
         this.bookService = bookService;
         this.authorService = authorService;
+        this.booksPerAuthorRepository = booksPerAuthorRepository;
     }
 
     @Override
@@ -70,6 +73,11 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     @Override
     public List<DisplayBookDto> findTopTenBooks() {
         return DisplayBookDto.from(bookService.findTopTenBooks());
+    }
+
+    @Override
+    public void refreshMaterializedView() {
+        booksPerAuthorRepository.refreshMaterializedView();
     }
 
 }

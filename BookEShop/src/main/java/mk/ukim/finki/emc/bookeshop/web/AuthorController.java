@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mk.ukim.finki.emc.bookeshop.dto.CreateAuthorDto;
 import mk.ukim.finki.emc.bookeshop.dto.DisplayAuthorDto;
+import mk.ukim.finki.emc.bookeshop.model.projections.AuthorProjection;
+import mk.ukim.finki.emc.bookeshop.model.views.AuthorsPerCountryView;
 import mk.ukim.finki.emc.bookeshop.service.application.AuthorApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +64,24 @@ public class AuthorController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @Operation(
+            summary = "Get authors' name and surname",
+            description = "Retrieves a list of all authors by their name and surname."
+    )
+    @GetMapping("/names")
+    public List<AuthorProjection> getAuthorsByNamesAndSurnames() {
+        return authorApplicationService.getAuthorsByNameAndSurname();
+    }
+
+    @Operation(
+            summary = "Get authors by country",
+            description = "Retrieves a list of all authors grouped by country."
+    )
+    @GetMapping("/by-country")
+    public List<AuthorsPerCountryView> getAuthorsByCountry() {
+        return authorApplicationService.findAuthorsPerCountry();
     }
 
 }

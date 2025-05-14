@@ -1,6 +1,5 @@
 package mk.ukim.finki.emc.bookeshop.dto;
 
-import mk.ukim.finki.emc.bookeshop.model.domain.Author;
 import mk.ukim.finki.emc.bookeshop.model.domain.Book;
 import mk.ukim.finki.emc.bookeshop.model.enumerations.Category;
 
@@ -12,10 +11,6 @@ public record DisplayBookDto(Long id, String name, Category category, Long autho
 
     public static DisplayBookDto from(Book book) {
         return new DisplayBookDto(book.getId(), book.getName(), book.getCategory(), book.getAuthor().getId(), book.getAvailableCopies(), book.getDateCreated());
-    }
-
-    public Book toBook(Author author) {
-        return new Book(name, category, author, availableCopies, dateCreated);
     }
 
     public static List<DisplayBookDto> from(List<Book> books) {

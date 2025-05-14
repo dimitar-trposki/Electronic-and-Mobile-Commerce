@@ -1,9 +1,8 @@
 package mk.ukim.finki.emc.bookeshop.service.domain.impl;
 
 import mk.ukim.finki.emc.bookeshop.model.domain.Book;
-import mk.ukim.finki.emc.bookeshop.model.enumerations.Category;
-import mk.ukim.finki.emc.bookeshop.dto.BookDto;
 import mk.ukim.finki.emc.bookeshop.repository.BookRepository;
+import mk.ukim.finki.emc.bookeshop.repository.BooksPerAuthorRepository;
 import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.BookService;
 import org.springframework.stereotype.Service;
@@ -17,10 +16,12 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorService authorService;
+    private final BooksPerAuthorRepository booksPerAuthorRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService, BooksPerAuthorRepository booksPerAuthorRepository) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
+        this.booksPerAuthorRepository = booksPerAuthorRepository;
     }
 
     @Override
@@ -107,6 +108,11 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll().stream()
                 .sorted(Comparator.comparing(Book::getDateCreated).reversed())
                 .limit(10).toList();
+    }
+
+    @Override
+    public void refreshMaterializedView() {
+        booksPerAuthorRepository.refreshMaterializedView();
     }
 
 }

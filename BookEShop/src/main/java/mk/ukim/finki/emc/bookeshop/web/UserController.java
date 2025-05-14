@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 import mk.ukim.finki.emc.bookeshop.dto.*;
+import mk.ukim.finki.emc.bookeshop.service.application.JwtLogApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.application.UserApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,11 @@ import java.util.List;
 @Tag(name = "User API", description = "Endpoints for user authentication and registration")
 public class UserController {
     private final UserApplicationService userApplicationService;
+    private final JwtLogApplicationService jwtLogApplicationService;
 
-    public UserController(UserApplicationService userApplicationService) {
+    public UserController(UserApplicationService userApplicationService, JwtLogApplicationService jwtLogApplicationService) {
         this.userApplicationService = userApplicationService;
+        this.jwtLogApplicationService = jwtLogApplicationService;
     }
 
     @Operation(summary = "Register a new user", description = "Creates a new user account")
@@ -42,7 +46,7 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "User login", description = "Authenticates a user and starts a session")
+    @Operation(summary = "User login", description = "Authenticates a user and generates a JWT")
     @ApiResponses(
             value = {@ApiResponse(
                     responseCode = "200",
@@ -50,24 +54,26 @@ public class UserController {
             ), @ApiResponse(responseCode = "404", description = "Invalid username or password")}
     )
     @PostMapping("/login")
-    public ResponseEntity<DisplayUserDto> login(HttpServletRequest request) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginUserDto loginUserDto) {
         try {
-            DisplayUserDto displayUserDto = userApplicationService.login(
-                    new LoginUserDto(request.getParameter("username"), request.getParameter("password"))
-            ).orElseThrow(RuntimeException::new);
-
-            request.getSession().setAttribute("user", displayUserDto.toUser());
-            return ResponseEntity.ok(displayUserDto);
+            return userApplicationService.login(loginUserDto)
+                    .map(ResponseEntity::ok)
+                    .orElseThrow(RuntimeException::new);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @Operation(summary = "User logout", description = "Ends the user's session")
-    @ApiResponse(responseCode = "200", description = "User logged out successfully")
-    @GetMapping("/logout")
-    public void logout(HttpServletRequest request) {
-        request.getSession().invalidate();
-    }
+//    @Operation(summary = "User logout", description = "Ends the user's session")
+//    @ApiResponse(responseCode = "200", description = "User logged out successfully")
+//    @GetMapping("/logout")
+//    public void logout(HttpServletRequest request) {
+//        request.getSession().invalidate();
+//    }
 
+    @Operation(summary = "Jwt logs", description = "Jwt logs of all users")
+    @GetMapping("/auth-logs")
+    public List<DisplayJwtLogDto> getAllLogs() {
+        return jwtLogApplicationService.getAllLogs();
+    }
 }

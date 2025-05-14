@@ -2,8 +2,10 @@ package mk.ukim.finki.emc.bookeshop.service.application.impl;
 
 import mk.ukim.finki.emc.bookeshop.dto.CreateAuthorDto;
 import mk.ukim.finki.emc.bookeshop.dto.DisplayAuthorDto;
-import mk.ukim.finki.emc.bookeshop.model.domain.Author;
 import mk.ukim.finki.emc.bookeshop.model.domain.Country;
+import mk.ukim.finki.emc.bookeshop.model.projections.AuthorProjection;
+import mk.ukim.finki.emc.bookeshop.model.views.AuthorsPerCountryView;
+import mk.ukim.finki.emc.bookeshop.model.views.BooksPerAuthorView;
 import mk.ukim.finki.emc.bookeshop.service.application.AuthorApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.CountryService;
@@ -54,4 +56,25 @@ public class AuthorApplicationServiceImpl implements AuthorApplicationService {
     public void deleteById(Long id) {
         authorService.deleteById(id);
     }
+
+    @Override
+    public List<BooksPerAuthorView> findAllBooksByAuthor() {
+        return authorService.findAllBooksByAuthor();
+    }
+
+    @Override
+    public List<AuthorProjection> getAuthorsByNameAndSurname() {
+        return authorService.getAuthorsByNameAndSurname();
+    }
+
+    @Override
+    public void refreshMaterializedView() {
+        authorService.refreshMaterializedView();
+    }
+
+    @Override
+    public List<AuthorsPerCountryView> findAuthorsPerCountry() {
+        return authorService.findAuthorsPerCountry();
+    }
+
 }

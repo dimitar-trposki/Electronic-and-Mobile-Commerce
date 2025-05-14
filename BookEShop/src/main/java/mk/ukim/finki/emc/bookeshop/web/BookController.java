@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mk.ukim.finki.emc.bookeshop.dto.CreateBookDto;
 import mk.ukim.finki.emc.bookeshop.dto.DisplayBookDto;
+import mk.ukim.finki.emc.bookeshop.model.views.BooksPerAuthorView;
+import mk.ukim.finki.emc.bookeshop.service.application.AuthorApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.application.BookApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,11 @@ import java.util.List;
 public class BookController {
 
     private final BookApplicationService bookApplicationService;
+    private final AuthorApplicationService authorApplicationService;
 
-    public BookController(BookApplicationService bookApplicationService) {
+    public BookController(BookApplicationService bookApplicationService, AuthorApplicationService authorApplicationService) {
         this.bookApplicationService = bookApplicationService;
+        this.authorApplicationService = authorApplicationService;
     }
 
     @Operation(
@@ -71,6 +75,15 @@ public class BookController {
     @GetMapping("/findTopTenBooks")
     public List<DisplayBookDto> findTopTenBooks() {
         return bookApplicationService.findTopTenBooks();
+    }
+
+    @Operation(
+            summary = "Gets number of books per author",
+            description = "Retrieves a list of books per author."
+    )
+    @GetMapping("/by-author")
+    public List<BooksPerAuthorView> getBooksByAuthor() {
+        return authorApplicationService.findAllBooksByAuthor();
     }
 
 }

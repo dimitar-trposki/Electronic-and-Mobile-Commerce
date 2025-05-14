@@ -33,36 +33,4 @@ public class BookDto {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
-    public Integer getAvailableCopies() {
-        return availableCopies;
-    }
-
-    public void setAvailableCopies(Integer availableCopies) {
-        this.availableCopies = availableCopies;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
 }

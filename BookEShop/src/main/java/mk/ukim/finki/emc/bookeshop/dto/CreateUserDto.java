@@ -1,6 +1,5 @@
 package mk.ukim.finki.emc.bookeshop.dto;
 
-import mk.ukim.finki.emc.bookeshop.model.domain.Country;
 import mk.ukim.finki.emc.bookeshop.model.domain.User;
 import mk.ukim.finki.emc.bookeshop.model.enumerations.Role;
 
@@ -16,10 +15,6 @@ public record CreateUserDto(String username,
 
     public static CreateUserDto from(User user) {
         return new CreateUserDto(user.getUsername(), user.getPassword(), user.getPassword(), user.getName(), user.getSurname(), user.getRole());
-    }
-
-    public User toUser(Country country) {
-        return new User(username, password, name, surname, role);
     }
 
     public static List<CreateUserDto> from(List<User> users) {

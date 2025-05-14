@@ -9,10 +9,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "book_users")
+@NamedEntityGraph(
+        name = "User.withoutWishlist",
+        attributeNodes = {
+                @NamedAttributeNode("username"),
+                @NamedAttributeNode("name"),
+                @NamedAttributeNode("surname"),
+                @NamedAttributeNode("role")
+        }
+)
 public class User implements UserDetails {
 
     @Id
@@ -32,6 +42,13 @@ public class User implements UserDetails {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
+
+    // default:
+    // to-one -> FetchType.EAGER
+    // to-many -> FetchType.LAZY
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Wishlist> wishlists;
+
 
     public User() {
     }
