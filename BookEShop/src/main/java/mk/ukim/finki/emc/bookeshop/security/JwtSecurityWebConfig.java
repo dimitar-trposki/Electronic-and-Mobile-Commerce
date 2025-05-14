@@ -32,7 +32,7 @@ public class JwtSecurityWebConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -57,14 +57,13 @@ public class JwtSecurityWebConfig {
                                 )
                                 .permitAll()
                                 .requestMatchers(
-                                        "/api/books",
-                                        "/api/authors/",
-                                        "/api/countries",
-                                        "/api/user"
-                                )
-                                .hasAnyRole("USER", "LIBRARIAN")
+                                        "/api/books/**",
+                                        "/api/authors/**",
+                                        "/api/countries/**"
+                                ).permitAll()
+                                //.hasAnyRole("USER", "LIBRARIAN")
                                 .anyRequest()
-                                .hasRole("LIBRARIAN")
+                                .permitAll()
                 )
                 .sessionManagement(sessionManagementConfigurer ->
                         sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
