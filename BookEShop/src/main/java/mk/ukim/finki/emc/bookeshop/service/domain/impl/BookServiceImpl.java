@@ -1,10 +1,13 @@
 package mk.ukim.finki.emc.bookeshop.service.domain.impl;
 
+import mk.ukim.finki.emc.bookeshop.dto.DisplayBookDto;
 import mk.ukim.finki.emc.bookeshop.model.domain.Book;
 import mk.ukim.finki.emc.bookeshop.repository.BookRepository;
 import mk.ukim.finki.emc.bookeshop.repository.BooksPerAuthorRepository;
 import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -28,6 +31,11 @@ public class BookServiceImpl implements BookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
         //return bookRepository.findAll().stream().filter(book -> !book.isIsDeleted()).toList();
+    }
+
+    @Override
+    public Page<Book> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 
     @Override

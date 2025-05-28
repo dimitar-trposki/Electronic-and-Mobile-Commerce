@@ -1,6 +1,5 @@
-package mk.ukim.finki.emc.bookeshop.security;
+package mk.ukim.finki.emc.bookeshop.config.security;
 
-import mk.ukim.finki.emc.bookeshop.config.CustomUsernamePasswordAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

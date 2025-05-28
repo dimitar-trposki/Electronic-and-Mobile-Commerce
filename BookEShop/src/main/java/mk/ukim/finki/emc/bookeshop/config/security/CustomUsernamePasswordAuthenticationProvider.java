@@ -1,4 +1,4 @@
-package mk.ukim.finki.emc.bookeshop.config;
+package mk.ukim.finki.emc.bookeshop.config.security;
 
 import mk.ukim.finki.emc.bookeshop.service.domain.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;

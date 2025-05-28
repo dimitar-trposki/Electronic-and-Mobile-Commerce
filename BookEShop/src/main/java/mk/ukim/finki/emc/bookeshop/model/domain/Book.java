@@ -50,51 +50,51 @@ public class Book {
         this.dateCreated = dateCreated;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public Integer getAvailableCopies() {
-        return availableCopies;
-    }
-
-    public void setAvailableCopies(Integer availableCopies) {
-        this.availableCopies = availableCopies;
-    }
-
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
+//
+//    public Author getAuthor() {
+//        return author;
+//    }
+//
+//    public void setAuthor(Author author) {
+//        this.author = author;
+//    }
+//
+//    public Integer getAvailableCopies() {
+//        return availableCopies;
+//    }
+//
+//    public void setAvailableCopies(Integer availableCopies) {
+//        this.availableCopies = availableCopies;
+//    }
+//
+//    public LocalDateTime getDateCreated() {
+//        return dateCreated;
+//    }
+//
+//    public void setDateCreated(LocalDateTime dateCreated) {
+//        this.dateCreated = dateCreated;
+//    }
 }

@@ -1,6 +1,5 @@
-package mk.ukim.finki.emc.bookeshop.config;
+package mk.ukim.finki.emc.bookeshop.config.init;
 
-import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.emc.bookeshop.model.domain.Author;
 import mk.ukim.finki.emc.bookeshop.model.domain.Book;
 import mk.ukim.finki.emc.bookeshop.model.domain.User;

@@ -1,4 +1,5 @@
 import axiosInstance from "../axios/axios.js";
+import axios from 'axios';
 
 const bookRepository = {
     findAll: async () => {
@@ -13,6 +14,10 @@ const bookRepository = {
     delete: async (id) => {
         return await axiosInstance.delete(`/books/delete/${id}`)
     },
+};
+
+export const fetchBooks = (page, size = 5) => {
+    return axios.get(`/api/books/paginated?page=${page}&size=${size}`);
 };
 
 export default bookRepository;

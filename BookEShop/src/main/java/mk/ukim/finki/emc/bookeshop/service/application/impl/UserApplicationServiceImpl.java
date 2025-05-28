@@ -5,7 +5,7 @@ import mk.ukim.finki.emc.bookeshop.dto.DisplayUserDto;
 import mk.ukim.finki.emc.bookeshop.dto.LoginResponseDto;
 import mk.ukim.finki.emc.bookeshop.dto.LoginUserDto;
 import mk.ukim.finki.emc.bookeshop.model.domain.User;
-import mk.ukim.finki.emc.bookeshop.security.JwtHelper;
+import mk.ukim.finki.emc.bookeshop.helpers.JwtHelper;
 import mk.ukim.finki.emc.bookeshop.service.application.JwtLogApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.application.UserApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.domain.UserService;

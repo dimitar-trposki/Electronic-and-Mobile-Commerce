@@ -1,4 +1,4 @@
-package mk.ukim.finki.emc.bookeshop.web;
+package mk.ukim.finki.emc.bookeshop.web.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -7,6 +7,8 @@ import mk.ukim.finki.emc.bookeshop.dto.DisplayBookDto;
 import mk.ukim.finki.emc.bookeshop.model.views.BooksPerAuthorView;
 import mk.ukim.finki.emc.bookeshop.service.application.AuthorApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.application.BookApplicationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +37,11 @@ public class BookController {
         return bookApplicationService.findAll();
     }
 
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<DisplayBookDto>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(bookApplicationService.findAll(pageable));
+    }
+
     @Operation(summary = "Add a new book", description = "Creates a new book.")
     @PostMapping("/add")
     public ResponseEntity<DisplayBookDto> save(@RequestBody CreateBookDto book) {
@@ -53,7 +60,7 @@ public class BookController {
 
     @Operation(summary = "Update an existing book", description = "Updates a book by ID.")
     @PutMapping("/edit/{id}")
-    public ResponseEntity<DisplayBookDto> update(@PathVariable Long id, @RequestBody CreateBookDto book) {
+    public ResponseEntity<DisplayBookDto> update(@PathVariable("id") Long id, @RequestBody CreateBookDto book) {
         return bookApplicationService.update(id, book)
                 .map(b -> ResponseEntity.ok().body(b))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -61,7 +68,7 @@ public class BookController {
 
     @Operation(summary = "Delete a book", description = "Deletes a book by its ID.")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         if (bookApplicationService.findById(id).isPresent()) {
             bookApplicationService.deleteById(id);
             return ResponseEntity.ok().build();

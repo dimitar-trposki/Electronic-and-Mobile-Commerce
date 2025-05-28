@@ -8,9 +8,10 @@ import mk.ukim.finki.emc.bookeshop.repository.BooksPerAuthorRepository;
 import mk.ukim.finki.emc.bookeshop.service.application.BookApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.domain.AuthorService;
 import mk.ukim.finki.emc.bookeshop.service.domain.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,12 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     @Override
     public List<DisplayBookDto> findAll() {
         return DisplayBookDto.from(bookService.findAll());
+    }
+
+    @Override
+    public Page<DisplayBookDto> findAll(Pageable pageable) {
+        return bookService.findAll(pageable)
+                .map(DisplayBookDto::from);
     }
 
     @Override

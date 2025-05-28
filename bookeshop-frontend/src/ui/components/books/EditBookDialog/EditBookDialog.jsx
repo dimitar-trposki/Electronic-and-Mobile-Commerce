@@ -13,8 +13,9 @@ import {
 const EditBookDialog = ({open, onClose, book, onEdit}) => {
     const [formData, setFormData] = useState({
         "name": book.name,
-        "author": book.author,
+        "authorId": book.authorId,
         "category": book.category,
+        "dateCreated": book.dateCreated,
         "availableCopies": book.availableCopies,
     });
 
@@ -34,6 +35,7 @@ const EditBookDialog = ({open, onClose, book, onEdit}) => {
     };
 
     const handleSubmit = () => {
+        console.log(book.id);
         onEdit(book.id, formData);
         setFormData(formData);
         onClose();

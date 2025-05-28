@@ -1,8 +1,9 @@
-package mk.ukim.finki.emc.bookeshop.security;
+package mk.ukim.finki.emc.bookeshop.helpers;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import mk.ukim.finki.emc.bookeshop.constants.JwtConstants;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 

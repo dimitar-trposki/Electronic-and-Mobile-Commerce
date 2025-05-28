@@ -1,11 +1,9 @@
-package mk.ukim.finki.emc.bookeshop.web;
+package mk.ukim.finki.emc.bookeshop.web.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
 import mk.ukim.finki.emc.bookeshop.dto.*;
 import mk.ukim.finki.emc.bookeshop.service.application.JwtLogApplicationService;
 import mk.ukim.finki.emc.bookeshop.service.application.UserApplicationService;

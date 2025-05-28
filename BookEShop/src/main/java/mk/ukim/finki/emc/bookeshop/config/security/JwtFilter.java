@@ -1,4 +1,4 @@
-package mk.ukim.finki.emc.bookeshop.security;
+package mk.ukim.finki.emc.bookeshop.config.security;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -6,6 +6,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import mk.ukim.finki.emc.bookeshop.constants.JwtConstants;
+import mk.ukim.finki.emc.bookeshop.helpers.JwtHelper;
 import mk.ukim.finki.emc.bookeshop.model.domain.User;
 import mk.ukim.finki.emc.bookeshop.service.domain.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
