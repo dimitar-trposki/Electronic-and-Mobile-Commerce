@@ -28,8 +28,7 @@ public class DishController {
 
     @GetMapping
     public ResponseEntity<List<DisplayDishDto>> findAll() {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dishApplicationService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -42,38 +41,39 @@ public class DishController {
 
     @GetMapping("/{id}/details")
     public ResponseEntity<DisplayDishDetailsDto> findByIdWithDetails(@PathVariable Long id) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return dishApplicationService.findByIdWithDetails(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('OWNER')")
     @PostMapping("/add")
     public ResponseEntity<DisplayDishDto> save(@RequestBody CreateDishDto createMenuItemDto) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dishApplicationService.save(createMenuItemDto));
     }
 
     @PutMapping("/{id}/edit")
     public ResponseEntity<DisplayDishDto> update(@PathVariable Long id, @RequestBody CreateDishDto createMenuItemDto) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return dishApplicationService.update(id, createMenuItemDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<DisplayDishDto> deleteById(@PathVariable Long id) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return dishApplicationService.deleteById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/{id}/add-to-order")
     public ResponseEntity<DisplayOrderDto> addToOrder(@PathVariable Long id, @AuthenticationPrincipal User user) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dishApplicationService.addToOrder(id, user.getUsername()));
     }
 
     @PostMapping("/{id}/remove-from-order")
     public ResponseEntity<DisplayOrderDto> removeFromOrder(@PathVariable Long id, @AuthenticationPrincipal User user) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dishApplicationService.removeFromOrder(id, user.getUsername()));
     }
 
 }

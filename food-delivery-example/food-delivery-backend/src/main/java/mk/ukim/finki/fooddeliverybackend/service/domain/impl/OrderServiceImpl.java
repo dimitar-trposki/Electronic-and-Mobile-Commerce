@@ -13,6 +13,7 @@ import mk.ukim.finki.fooddeliverybackend.repository.DishRepository;
 import mk.ukim.finki.fooddeliverybackend.repository.OrderRepository;
 import mk.ukim.finki.fooddeliverybackend.repository.UserRepository;
 import mk.ukim.finki.fooddeliverybackend.service.domain.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -36,26 +37,41 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> findPending(String username) {
-        // TODO: Implement this.
-        return Optional.empty();
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(username);
+        }
+        return orderRepository.findByUserAndStatus(user.get(), OrderStatus.PENDING);
     }
 
     @Override
     public Order findOrCreatePending(String username) {
-        // TODO: Implement this.
-        return null;
+        Optional<Order> order = findPending(username);
+        return order.orElseGet(() -> orderRepository.save(new Order(userRepository.findByUsername(username).get())));
     }
 
     @Override
     public Optional<Order> confirm(String username) {
-        // TODO: Implement this.
-        return Optional.empty();
+        Optional<Order> order = findPending(username);
+        if (order.isPresent() && order.get().getDishes().isEmpty()) {
+            throw new EmptyOrderException();
+        }
+        return order.map(o -> {
+            o.confirm();
+            return orderRepository.save(o);
+        });
     }
 
     @Override
     public Optional<Order> cancel(String username) {
-        // TODO: Implement this.
-        return Optional.empty();
+        Optional<Order> order = findPending(username);
+        if (order.isPresent() && order.get().getDishes().isEmpty()) {
+            throw new EmptyOrderException();
+        }
+        return order.map(o -> {
+            o.cancel();
+            return orderRepository.save(o);
+        });
     }
 
 }

@@ -18,20 +18,17 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
 
     @Override
     public DisplayOrderDto findOrCreatePending(String username) {
-        // TODO: Implement this.
-        return null;
+        return DisplayOrderDto.from(orderService.findOrCreatePending(username));
     }
 
     @Override
     public Optional<DisplayOrderDto> confirm(String username) {
-        // TODO: Implement this.
-        return Optional.empty();
+        return orderService.confirm(username).map(DisplayOrderDto::from);
     }
 
     @Override
     public Optional<DisplayOrderDto> cancel(String username) {
-        // TODO: Implement this.
-        return Optional.empty();
+        return orderService.cancel(username).map(DisplayOrderDto::from);
     }
 
 }

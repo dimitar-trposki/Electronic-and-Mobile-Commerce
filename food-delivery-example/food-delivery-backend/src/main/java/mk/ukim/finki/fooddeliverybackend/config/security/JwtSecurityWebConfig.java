@@ -79,8 +79,34 @@ public class JwtSecurityWebConfig {
                                         "/api/user/login"
                                 )
                                 .permitAll()
+                                .requestMatchers("/api/user/me")
+                                .authenticated()
+                                .requestMatchers(
+                                        "/api/restaurants",
+                                        "/api/restaurants/{id}",
+                                        "/api/dishes",
+                                        "/api/dishes/{id}",
+                                        "/api/dishes/{id}/details",
+                                        "/api/dishes/{id}/add-to-order",
+                                        "/api/dishes/{id}/remove-from-order",
+                                        "/api/orders/pending",
+                                        "/api/orders/pending/confirm",
+                                        "/api/orders/pending/cancel"
+                                )
+                                .hasRole("CUSTOMER")
+                                .requestMatchers(
+                                        "/api/dishes/add",
+                                        "/api/dishes/{id}/edit",
+                                        "/api/dishes/{id}/delete",
+                                        "/api/restaurants/add",
+                                        "/api/restaurants/{id}/edit",
+                                        "/api/restaurants/{id}/delete"
+                                )
+                                .hasRole("OWNER")
+                                .requestMatchers("/api/users/{username}")
+                                .hasRole("ADMIN")
                                 .anyRequest()
-                                .permitAll()
+                                .hasRole("ADMIN")
                 )
                 .sessionManagement(sessionManagementConfigurer ->
                         sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

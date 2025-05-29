@@ -7,12 +7,14 @@ import mk.ukim.finki.fooddeliverybackend.dto.domain.DisplayOrderDto;
 import mk.ukim.finki.fooddeliverybackend.model.domain.Dish;
 import mk.ukim.finki.fooddeliverybackend.model.domain.Order;
 import mk.ukim.finki.fooddeliverybackend.model.domain.Restaurant;
+import mk.ukim.finki.fooddeliverybackend.model.domain.User;
 import mk.ukim.finki.fooddeliverybackend.model.exceptions.DishNotFoundException;
 import mk.ukim.finki.fooddeliverybackend.model.exceptions.RestaurantNotFoundException;
 import mk.ukim.finki.fooddeliverybackend.service.application.DishApplicationService;
 import mk.ukim.finki.fooddeliverybackend.service.domain.DishService;
 import mk.ukim.finki.fooddeliverybackend.service.domain.OrderService;
 import mk.ukim.finki.fooddeliverybackend.service.domain.RestaurantService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,8 +36,7 @@ public class DishApplicationServiceImpl implements DishApplicationService {
 
     @Override
     public List<DisplayDishDto> findAll() {
-        // TODO: Implement this.
-        return new ArrayList<>();
+        return DisplayDishDto.from(dishService.findAll());
     }
 
     @Override
@@ -47,38 +48,42 @@ public class DishApplicationServiceImpl implements DishApplicationService {
 
     @Override
     public Optional<DisplayDishDetailsDto> findByIdWithDetails(Long id) {
-        // TODO: Implement this.
-        return Optional.empty();
+        return dishService.findById(id).map(DisplayDishDetailsDto::from);
     }
 
     @Override
     public DisplayDishDto save(CreateDishDto createDishDto) {
-        // TODO: Implement this.
-        return null;
+        Restaurant restaurant = restaurantService.findById(createDishDto.restaurantId()).get();
+        return DisplayDishDto.from(dishService.save(createDishDto.toDish(restaurant)));
     }
 
     @Override
     public Optional<DisplayDishDto> update(Long id, CreateDishDto createDishDto) {
-        // TODO: Implement this.
-        return Optional.empty();
+        Restaurant restaurant = restaurantService.findById(createDishDto.restaurantId()).get();
+        return dishService.update(id, createDishDto.toDish(restaurant)).map(DisplayDishDto::from);
     }
 
     @Override
     public Optional<DisplayDishDto> deleteById(Long id) {
-        // TODO: Implement this.
-        return Optional.empty();
+        return dishService.deleteById(id).map(DisplayDishDto::from);
     }
 
     @Override
     public DisplayOrderDto addToOrder(Long id, String username) {
-        // TODO: Implement this.
-        return null;
+        Optional<Dish> dish = dishService.findById(id);
+        if (dish.isEmpty()) {
+            throw new DishNotFoundException(id);
+        }
+        Order order = orderService.findOrCreatePending(username);
+        return DisplayOrderDto.from(dishService.addToOrder(dish.get(), order));
     }
 
     @Override
     public DisplayOrderDto removeFromOrder(Long id, String username) {
-        // TODO: Implement this.
-        return null;
+        Dish dish = dishService.findById(id)
+                .orElseThrow(() -> new DishNotFoundException(id));
+        Order order = orderService.findOrCreatePending(username);
+        return DisplayOrderDto.from(dishService.removeFromOrder(dish, order));
     }
 
 }

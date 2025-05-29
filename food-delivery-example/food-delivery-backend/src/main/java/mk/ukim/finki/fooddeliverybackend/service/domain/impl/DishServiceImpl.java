@@ -25,8 +25,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public List<Dish> findAll() {
-        // TODO: Implement this.
-        return new ArrayList<>();
+        return dishRepository.findAll();
     }
 
     @Override
@@ -36,32 +35,44 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Dish save(Dish dish) {
-        // TODO: Implement this.
-        return null;
+        return dishRepository.save(dish);
     }
 
     @Override
     public Optional<Dish> update(Long id, Dish dish) {
-        // TODO: Implement this.
-        return Optional.empty();
+        return dishRepository.findById(id)
+                .map(existingDish -> {
+                    existingDish.setName(dish.getName());
+                    existingDish.setDescription(dish.getDescription());
+                    existingDish.setQuantity(dish.getQuantity());
+                    existingDish.setPrice(dish.getPrice());
+                    existingDish.setRestaurant(dish.getRestaurant());
+                    return dishRepository.save(existingDish);
+                });
     }
 
     @Override
     public Optional<Dish> deleteById(Long id) {
-        // TODO: Implement this.
-        return Optional.empty();
+        Optional<Dish> dish = dishRepository.findById(id);
+        dishRepository.deleteById(id);
+        return dish;
     }
 
     @Override
     public Order addToOrder(Dish dish, Order order) {
-        // TODO: Implement this.
-        return null;
+        if (dish.getQuantity() <= 0) {
+            throw new DishOutOfStockException(dish.getId());
+        }
+        dish.decreaseQuantity();
+        order.getDishes().add(dish);
+        return orderRepository.save(order);
     }
 
     @Override
     public Order removeFromOrder(Dish dish, Order order) {
-        // TODO: Implement this.
-        return null;
+        dish.increaseQuantity();
+        order.getDishes().remove(dish);
+        return orderRepository.save(order);
     }
 
 }

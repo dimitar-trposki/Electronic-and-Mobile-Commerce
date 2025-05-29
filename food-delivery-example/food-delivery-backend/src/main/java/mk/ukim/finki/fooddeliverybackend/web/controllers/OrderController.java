@@ -22,20 +22,17 @@ public class OrderController {
 
     @GetMapping("/pending")
     public ResponseEntity<DisplayOrderDto> findOrCreatePending(@AuthenticationPrincipal User user) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(orderApplicationService.findOrCreatePending(user.getUsername()));
     }
 
     @PutMapping("/pending/confirm")
     public ResponseEntity<DisplayOrderDto> confirm(@AuthenticationPrincipal User user) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(orderApplicationService.confirm(user.getUsername()).get());
     }
 
     @PutMapping("/pending/cancel")
     public ResponseEntity<DisplayOrderDto> cancel(@AuthenticationPrincipal User user) {
-        // TODO: Implement this.
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(orderApplicationService.cancel(user.getUsername()).get());
     }
 
 }
