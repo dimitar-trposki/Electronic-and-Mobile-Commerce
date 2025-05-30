@@ -56,7 +56,7 @@ const useBooks = () => {
         fetchBooks();
     }, [fetchBooks]);
 
-    return {...state, onAdd: onAdd, OnEdit: onEdit, onDelete: onDelete};
+    return {...state, onAdd: onAdd, onEdit: onEdit, onDelete: onDelete};
 };
 
 export default useBooks;

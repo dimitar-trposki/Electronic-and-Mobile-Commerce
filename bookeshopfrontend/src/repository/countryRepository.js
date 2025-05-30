@@ -2,7 +2,7 @@ import axiosInstance from "../axios/axios.js";
 
 const countryRepository = {
     findAll: async () => {
-        return await axiosInstance.get("/categories");
+        return await axiosInstance.get("/countries");
     },
     findById: async (id) => {
         return await axiosInstance.get(`/countries/${id}`);

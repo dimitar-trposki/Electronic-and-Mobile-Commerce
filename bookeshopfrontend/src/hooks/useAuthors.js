@@ -15,7 +15,7 @@ const useAuthors = () => {
             .findAll()
             .then((response) => {
                 setState({
-                    "products": response.data,
+                    "authors": response.data,
                     "loading": false,
                 });
             })

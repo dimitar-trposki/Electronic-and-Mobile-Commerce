@@ -1,16 +1,16 @@
 import {useCallback, useState, useEffect} from "react";
 import countryRepository from "../repository/countryRepository.js";
 
-const initalState = {
+const initialState = {
     "countries": [],
     "loading": true,
 };
 
 const useCountries = () => {
-    const [state, setState] = useState(initalState);
+    const [state, setState] = useState(initialState);
 
     const fetchCountries = useCallback(() => {
-        setState(initalState);
+        setState(initialState);
         countryRepository
             .findAll()
             .then((response) => {
