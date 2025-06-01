@@ -11,6 +11,7 @@ import CountriesDetails from "./ui/components/countries/CountryDetails/CountryDe
 import Register from "./ui/components/auth/Register/Register.jsx";
 import Login from "./ui/components/auth/Login/Login.jsx";
 import ProtectedRoute from "./ui/components/routing/ProtectedRoute/ProtectedRoute.jsx";
+import Wishlist from "./ui/components/wishlist/Wishlist/Wishlist.jsx";
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                         <Route path="books/:id" element={<BooksDetails/>}/>
                         <Route path="authors/:id" element={<AuthorsDetails/>}/>
                         <Route path="countries/:id" element={<CountriesDetails/>}/>
+                        <Route path="wishlist" element={<Wishlist/>}/>
                     </Route>
                 </Route>
             </Routes>

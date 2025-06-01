@@ -27,6 +27,7 @@ import {
     FavoriteBorder,
     Share
 } from "@mui/icons-material";
+import wishlistRepository from "../../../../repository/wishlistRepository.js";
 
 const BookDetails = () => {
     const {id} = useParams();
@@ -41,12 +42,12 @@ const BookDetails = () => {
         );
     }
 
-    // const addToCart = () => {
-    //     shoppingCartRepository
-    //         .addToCart(id)
-    //         .then(() => console.log(`Successfully added product with ID ${id} to card.`))
-    //         .catch((error) => console.log(error));
-    // };
+    const addToWishlist = () => {
+        wishlistRepository
+            .addBookToWishlist(id)
+            .then(() => console.log(`Successfully added product with ID ${id} to card.`))
+            .catch((error) => console.log(error));
+    };
 
     return (
         <Box>
@@ -115,15 +116,15 @@ const BookDetails = () => {
                     </Grid>
                     <Grid size={12} display="flex" justifyContent="space-between">
                         <Stack direction="row" spacing={2}>
-                            {/*<Button*/}
-                            {/*    variant="contained"*/}
-                            {/*    color="primary"*/}
-                            {/*    startIcon={<ShoppingCart/>}*/}
-                            {/*    size="large"*/}
-                            {/*    onClick={addToCart}*/}
-                            {/*>*/}
-                            {/*    Add to Cart*/}
-                            {/*</Button>*/}
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                startIcon={<ShoppingCart/>}
+                                size="large"
+                                onClick={addToWishlist}
+                            >
+                                Add to Wishlist
+                            </Button>
                             {/*<Button*/}
                             {/*    variant="outlined"*/}
                             {/*    color="secondary"*/}
