@@ -113,7 +113,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findTopTenBooks() {
-        return bookRepository.findAll().stream()
+        return this.findAll().stream()
                 .sorted(Comparator.comparing(Book::getDateCreated).reversed())
                 .limit(10).toList();
     }
