@@ -10,6 +10,7 @@ import mk.ukim.finki.emc.bookeshop.model.domain.User;
 import mk.ukim.finki.emc.bookeshop.service.application.WishlistApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -54,8 +55,7 @@ public class WishlistController {
             ), @ApiResponse(responseCode = "404", description = "Book not found")}
     )
     @PostMapping("/add-product/{id}")
-    public ResponseEntity<WishlistDto> addProductToWishlist(@PathVariable Long id, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+    public ResponseEntity<WishlistDto> addProductToWishlist(@PathVariable Long id, @AuthenticationPrincipal User user) {
         try {
             return wishlistApplicationService.addBookToWishlist(user.getUsername(), id)
                     .map(ResponseEntity::ok)
