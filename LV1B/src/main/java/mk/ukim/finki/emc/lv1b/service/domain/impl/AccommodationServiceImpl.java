@@ -1,9 +1,9 @@
-package mk.ukim.finki.emc.lv1b.service.impl;
+package mk.ukim.finki.emc.lv1b.service.domain.impl;
 
-import mk.ukim.finki.emc.lv1b.model.Accommodation;
+import mk.ukim.finki.emc.lv1b.model.domain.Accommodation;
 import mk.ukim.finki.emc.lv1b.repository.AccommodationRepository;
-import mk.ukim.finki.emc.lv1b.service.AccommodationService;
-import mk.ukim.finki.emc.lv1b.service.HostService;
+import mk.ukim.finki.emc.lv1b.service.domain.AccommodationService;
+import mk.ukim.finki.emc.lv1b.service.domain.HostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,4 +57,10 @@ public class AccommodationServiceImpl implements AccommodationService {
         accommodationRepository.deleteById(id);
     }
 
+    @Override
+    public void rent(Long id) {
+        Accommodation accommodation = accommodationRepository.findById(id).get();
+        accommodation.setRented(true);
+        accommodationRepository.save(accommodation);
+    }
 }

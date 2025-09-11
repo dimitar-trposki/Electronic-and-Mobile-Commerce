@@ -1,6 +1,6 @@
-package mk.ukim.finki.emc.lv1b.service;
+package mk.ukim.finki.emc.lv1b.service.domain;
 
-import mk.ukim.finki.emc.lv1b.model.Host;
+import mk.ukim.finki.emc.lv1b.model.domain.Host;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,13 +1,17 @@
 package mk.ukim.finki.emc.lv1b.config;
 
 import jakarta.annotation.PostConstruct;
-import mk.ukim.finki.emc.lv1b.model.Accommodation;
-import mk.ukim.finki.emc.lv1b.model.AccommodationCategory;
-import mk.ukim.finki.emc.lv1b.model.Country;
-import mk.ukim.finki.emc.lv1b.model.Host;
+import mk.ukim.finki.emc.lv1b.model.domain.Accommodation;
+import mk.ukim.finki.emc.lv1b.model.domain.User;
+import mk.ukim.finki.emc.lv1b.model.enumerations.AccommodationCategory;
+import mk.ukim.finki.emc.lv1b.model.domain.Country;
+import mk.ukim.finki.emc.lv1b.model.domain.Host;
+import mk.ukim.finki.emc.lv1b.model.enumerations.Role;
 import mk.ukim.finki.emc.lv1b.repository.AccommodationRepository;
 import mk.ukim.finki.emc.lv1b.repository.CountryRepository;
 import mk.ukim.finki.emc.lv1b.repository.HostRepository;
+import mk.ukim.finki.emc.lv1b.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,11 +20,15 @@ public class DataInitializer {
     private final AccommodationRepository accommodationRepository;
     private final HostRepository hostRepository;
     private final CountryRepository countryRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataInitializer(AccommodationRepository accommodationRepository, HostRepository hostRepository, CountryRepository countryRepository) {
+    public DataInitializer(AccommodationRepository accommodationRepository, HostRepository hostRepository, CountryRepository countryRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.accommodationRepository = accommodationRepository;
         this.hostRepository = hostRepository;
         this.countryRepository = countryRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -43,6 +51,22 @@ public class DataInitializer {
         accommodationRepository.save(Hamlet);
         accommodationRepository.save(Pride_and_Prejudice);
         accommodationRepository.save(JaneEyre);
+
+        userRepository.save(new User(
+                "dt",
+                passwordEncoder.encode("dt"),
+                "Dimitar",
+                "Trposki",
+                Role.ROLE_HOST
+        ));
+
+        userRepository.save(new User(
+                "at",
+                passwordEncoder.encode("at"),
+                "Ana",
+                "Todorovska",
+                Role.ROLE_USER
+        ));
     }
 
 }

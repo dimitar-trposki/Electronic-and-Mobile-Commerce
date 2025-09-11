@@ -1,9 +1,9 @@
-package mk.ukim.finki.emc.lv1b.service.impl;
+package mk.ukim.finki.emc.lv1b.service.domain.impl;
 
-import mk.ukim.finki.emc.lv1b.model.Host;
+import mk.ukim.finki.emc.lv1b.model.domain.Host;
 import mk.ukim.finki.emc.lv1b.repository.HostRepository;
-import mk.ukim.finki.emc.lv1b.service.CountryService;
-import mk.ukim.finki.emc.lv1b.service.HostService;
+import mk.ukim.finki.emc.lv1b.service.domain.CountryService;
+import mk.ukim.finki.emc.lv1b.service.domain.HostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

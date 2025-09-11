@@ -1,7 +1,8 @@
-package mk.ukim.finki.emc.lv1b.model;
+package mk.ukim.finki.emc.lv1b.model.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import mk.ukim.finki.emc.lv1b.model.enumerations.AccommodationCategory;
 
 @Data
 @Entity
@@ -21,6 +22,8 @@ public class Accommodation {
 
     private Integer numRooms;
 
+    private boolean isRented;
+
     public Accommodation() {
     }
 
@@ -29,6 +32,15 @@ public class Accommodation {
         this.category = category;
         this.host = host;
         this.numRooms = numRooms;
+        this.isRented = false;
+    }
+
+    public Accommodation(String name, AccommodationCategory category, Host host, Integer numRooms, boolean isRented) {
+        this.name = name;
+        this.category = category;
+        this.host = host;
+        this.numRooms = numRooms;
+        this.isRented = isRented;
     }
 
 }

@@ -1,4 +1,4 @@
-package mk.ukim.finki.emc.lv1b.model;
+package mk.ukim.finki.emc.lv1b.model.enumerations;
 
 public enum AccommodationCategory {
     ROOM,

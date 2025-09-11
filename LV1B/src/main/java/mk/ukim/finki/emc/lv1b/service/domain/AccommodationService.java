@@ -1,6 +1,6 @@
-package mk.ukim.finki.emc.lv1b.service;
+package mk.ukim.finki.emc.lv1b.service.domain;
 
-import mk.ukim.finki.emc.lv1b.model.Accommodation;
+import mk.ukim.finki.emc.lv1b.model.domain.Accommodation;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,5 +16,7 @@ public interface AccommodationService {
     Optional<Accommodation> update(Long id, Accommodation accommodation);
 
     void deleteById(Long id);
+
+    void rent(Long id);
 
 }
