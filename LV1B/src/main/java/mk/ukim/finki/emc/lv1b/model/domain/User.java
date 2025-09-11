@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Booking> carts;
+    private List<Booking> bookings;
 
     public User() {
     }

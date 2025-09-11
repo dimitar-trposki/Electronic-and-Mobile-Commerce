@@ -2,6 +2,7 @@ package mk.ukim.finki.emc.lv1b.service.domain.impl;
 
 import mk.ukim.finki.emc.lv1b.model.domain.Accommodation;
 import mk.ukim.finki.emc.lv1b.repository.AccommodationRepository;
+import mk.ukim.finki.emc.lv1b.repository.AccommodationsPerHostRepository;
 import mk.ukim.finki.emc.lv1b.service.domain.AccommodationService;
 import mk.ukim.finki.emc.lv1b.service.domain.HostService;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
     private final HostService hostService;
+    private final AccommodationsPerHostRepository accommodationsPerHostRepository;
 
-    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService) {
+    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService, AccommodationsPerHostRepository accommodationsPerHostRepository) {
         this.accommodationRepository = accommodationRepository;
         this.hostService = hostService;
+        this.accommodationsPerHostRepository = accommodationsPerHostRepository;
     }
 
     @Override
@@ -62,5 +65,10 @@ public class AccommodationServiceImpl implements AccommodationService {
         Accommodation accommodation = accommodationRepository.findById(id).get();
         accommodation.setRented(true);
         accommodationRepository.save(accommodation);
+    }
+
+    @Override
+    public void refreshMaterializedView() {
+        this.accommodationsPerHostRepository.refreshMaterializedView();
     }
 }

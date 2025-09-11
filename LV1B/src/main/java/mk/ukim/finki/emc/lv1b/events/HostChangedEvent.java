@@ -1,0 +1,22 @@
+package mk.ukim.finki.emc.lv1b.events;
+
+import lombok.Getter;
+import org.springframework.context.ApplicationEvent;
+
+import java.time.LocalDateTime;
+
+@Getter
+public class HostChangedEvent extends ApplicationEvent {
+
+    private LocalDateTime when;
+
+    public HostChangedEvent(Object source) {
+        super(source);
+        this.when = LocalDateTime.now();
+    }
+
+    public HostChangedEvent(Object source, LocalDateTime when) {
+        super(source);
+        this.when = when;
+    }
+}

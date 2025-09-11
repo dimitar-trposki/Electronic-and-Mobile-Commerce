@@ -19,4 +19,6 @@ public interface AccommodationService {
 
     void rent(Long id);
 
+    void refreshMaterializedView();
+
 }
